@@ -1,9 +1,16 @@
 import React from 'react'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import HomeDisplay from './displays/HomeDisplay'
 
 const App = () =>
 {
   return (
-    <h1>Welcome to myshop</h1>
+    <>
+      <Header></Header>
+      <HomeDisplay></HomeDisplay>
+      <Footer></Footer>
+    </>
   )
 }
 
