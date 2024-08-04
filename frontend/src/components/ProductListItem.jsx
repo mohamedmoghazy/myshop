@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/ListItemDisplay.css';
+import '../styles/ProductListItem.css';
 
-const ListItemDisplay = ({ item }) => {
+const ProductListItem = ({ item }) => {
     return (
         <div className="product-card">
             <img src={item.image} alt={item.name} className="product-image" />
@@ -15,4 +15,4 @@ const ListItemDisplay = ({ item }) => {
     );
 }
 
-export default ListItemDisplay;
+export default ProductListItem;

@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '../styles/Header.module.css';
 import { FaShoppingCart } from 'react-icons/fa'
+import { Link } from 'react-router-dom';
 
 
 const Header = () =>
@@ -9,13 +10,13 @@ const Header = () =>
         <header className={styles.header}>
             <nav className={styles.nav}>
                 <div className={styles.navLeft}>
-                    <a href="/" className={styles.homeButton}>Home</a>
+                    <Link to="/" className={styles.homeButton}>Home</Link>
                 </div>
                 <div className={styles.navRight}>
-                    <a href="/cart" className={styles.cartButton}>
+                    <Link to="/cart" className={styles.cartButton}>
                         <FaShoppingCart />
-                    </a>
-                    <a href="/signin" className={styles.signinButton}> Sign In</a>
+                    </Link>
+                    <Link to="/signin" className={styles.signinButton}> Sign In</Link>
                 </div>
             </nav>
         </header>

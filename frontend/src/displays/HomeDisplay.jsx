@@ -6,7 +6,7 @@ import ListItemDisplay from './ListItemDisplay';
 const HomeDisplay = () => {
     return (
         <>
-            <h1>Products</h1>
+            <h1 className='title'>Products</h1>
             <div className="grid-container">
                 {products.map((product, index) => (
                     <ListItemDisplay key={index} item={product} />
