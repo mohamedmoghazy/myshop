@@ -8,6 +8,8 @@
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
     height: 100%;
+    text-decoration: none;
+    color: inherit;
 }
 
 .product-card:hover {
@@ -28,16 +30,27 @@
 }
 
 .product-name {
-    font-size: 1.5rem;
+    height: 2.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1rem;
     margin: 0;
 }
 
 .product-description {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin: 10px 0;
     color: #555;
     flex: 1;
-    /* Allow the description to take up remaining space */
+
+    height: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    white-space: normal;
 }
 
 .product-price {
@@ -57,7 +70,6 @@
     margin-top: 10px;
     transition: background-color 0.3s ease;
     align-self: flex-end;
-    /* Align the button at the bottom */
 }
 
 .add-to-cart-button:hover {

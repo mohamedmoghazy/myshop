@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/HomeDisplay.css';
-import products from '../products';
-import ListItemDisplay from './ListItemDisplay';
+import products from '../../../backend/data/products';
+import ProductListItem from '../components/ProductListItem';
 
 const HomeDisplay = () => {
     return (
@@ -9,7 +9,7 @@ const HomeDisplay = () => {
             <h1 className='title'>Products</h1>
             <div className="grid-container">
                 {products.map((product, index) => (
-                    <ListItemDisplay key={index} item={product} />
+                    <ProductListItem key={index} item={product} />
                 ))}
             </div>
         </>
