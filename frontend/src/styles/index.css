@@ -22,9 +22,8 @@ code {
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 4rem;
+  margin-top: 1rem;
   border-radius: 8px;
-  margin-left: 2rem;
 }
 
 .product-body {
@@ -49,4 +48,29 @@ code {
   height: auto;
   display: block;
   margin-bottom: 20px;
+}
+
+.quantity-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quantity-selector label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.quantity-selector select {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.out-of-stock {
+  margin-top: 10px;
+  color: red;
+  font-weight: bold;
 }

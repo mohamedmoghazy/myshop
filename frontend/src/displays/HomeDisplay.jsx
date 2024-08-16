@@ -6,6 +6,7 @@ import Message, { AlertTypes } from '../components/Message.jsx';
 
 const HomeDisplay = () =>
 {
+    
     const { data: products, isLoading, error } = useGetProductsQuery();
 
     return (

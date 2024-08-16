@@ -15,7 +15,6 @@ const ProductListItem = ({ item }) =>
                     <Rating value={item.rating} text={`${item.numReviews} reviews`} />
                 </div>
                 <p className="product-price">${item.price}</p>
-                <button className="add-to-cart-button">Add to Cart</button>
             </div>
         </Link>
     );
