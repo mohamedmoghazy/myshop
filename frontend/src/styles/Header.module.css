@@ -53,3 +53,12 @@
     color: #00bcf0;
     scale: 110%;
 }
+
+.cartItemsCount {
+    background-color: #f00000;
+    color: white;
+    border-radius: 50%;
+    padding: 0 5px;
+    font-size: 12px;
+    margin-left: 6px;
+}

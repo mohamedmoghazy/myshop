@@ -6,12 +6,14 @@ import HomeDisplay from './displays/HomeDisplay.jsx';
 import ProductDisplay from './displays/ProductDisplay.jsx';
 import { Provider } from 'react-redux';
 import store from './store.js';
+import CartDisplay from './displays/CartDisplay.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeDisplay />} />
       <Route path="/product/:id" element={<ProductDisplay />} />
+      <Route path="/cart" element={<CartDisplay />} />
     </Route>
   )
 )

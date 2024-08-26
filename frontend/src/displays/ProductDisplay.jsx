@@ -1,21 +1,32 @@
 import '../styles/index.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Rating from '../components/Rating';
 import { useGetProductDetailsQuery } from '../slices/productsApiSlice';
 import Loader from '../components/Loader.jsx';
+import { addToCart } from '../slices/cartSlice';
+import { useDispatch } from 'react-redux';
 
 const ProductDisplay = () =>
 {
     const { id: productId } = useParams();
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [quantity, setQuantity] = useState(1);
 
-     const handleQuantityChange = (event) => {
+    const handleQuantityChange = (event) => {
         setQuantity(Number(event.target.value));
     };
 
     const { data: product, error, isLoading } = useGetProductDetailsQuery(productId);
+
+    const addToCartHandler = () =>
+    { 
+        dispatch(addToCart({ ...product , quantity }));
+        navigate('/cart');
+    };
 
     return (
         <div className= 'product-body'>
@@ -41,10 +52,10 @@ const ProductDisplay = () =>
                         </div>
 
                         {product.countInStock <= 0 && (
-                                <div className='out-of-stock'>
-                                        Out of Stock
-                                    </div>
-                                )}
+                            <div className='out-of-stock'>
+                                Out of Stock
+                            </div>
+                        )}
 
                         {product.countInStock > 0 && (
                             <div className='quantity-add-to-cart'>
@@ -62,7 +73,7 @@ const ProductDisplay = () =>
                                         ))}
                                     </select>
                                 </div>
-                                <button className='add-to-cart-button' onClick={() => console.log(`Added ${quantity} to cart`)}>
+                                <button className='add-to-cart-button' onClick={addToCartHandler}>
                                     Add to Cart
                                 </button>
                             </div>

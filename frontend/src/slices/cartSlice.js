@@ -1,53 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { updateCart } from "../Utils/cartUtils";
 
 const initialState = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : { cartItems: [] };
-
-const minFreeShipping = 100;
-
-const addDecimals = (num) =>
-{
-    return (Math.round(num * 100) / 100).toFixed(2);
-}
-
-const calculateShipping = (itemsPrice) => itemsPrice > minFreeShipping ? 0 : 10;
 
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
-    reducers:
-    {
+    reducers: {
         addToCart: (state, action) =>
         {
             const item = action.payload;
-            const existItem = state.cartItems.find(x => x.product === item.product);
+            const existItem = state.cartItems.find(x => x._id === item._id);
 
             if (existItem)
             {
-                state.cartItems = state.cartItems.map(x => x.product === existItem.product ? item : x);
-            }
-            else
+                state.cartItems = state.cartItems.map(x => x._id === existItem._id ? { ...x, quantity: item.quantity } : x);
+            } else
             {
-                state.cartItems = [...state.cartItems, item];
+                state.cartItems.push(item);
             }
 
-            //calculate items price
-            state.itemsPrice = addDecimals(state.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));
-            //claculate shipping price
-            state.shippingPrice = addDecimals(calculateShipping);
-            //calculate tax price
-            state.taxPrice = addDecimals(Number((0.19 * state.itemsPrice).toFixed(2)));
-            //calculate total price
-            state.totalPrice = addDecimals(state.totalPrice = (
-                Number(state.itemsPrice) +
-                Number(state.shippingPrice) +
-                Number(state.taxPrice)
-            ).toFixed(2));
+            return updateCart(state);
+        },
 
-            localStorage.setItem('cart', JSON.stringify(state));
+        removeFromCart: (state, action) =>
+        {
+            state.cartItems = state.cartItems.filter(x => x._id !== action.payload);
+
+            return updateCart(state);
         }
     }
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
