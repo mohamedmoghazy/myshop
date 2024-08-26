@@ -8,7 +8,7 @@ const protect = AsyncHandler(async (req, res, next) =>
     let token;
 
     // Read JWT from the coookie
-    token = req.cookies.jwt;
+    token = req.cookies.sparktimetoken;
 
     // Make sure token exists
     if (token)

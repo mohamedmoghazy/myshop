@@ -17,7 +17,7 @@ const login = asyncHandler(async (req, res) =>
         });
 
         //set JWT as HTTP only cookie
-        res.cookie('token', token, {
+        res.cookie('sparktimetoken', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             sameSite: 'strict',
@@ -54,7 +54,12 @@ const registerUser = asyncHandler(async (req, res) =>
 // @access Private
 const logoutUser = asyncHandler(async (req, res) =>
 {
-    res.send('logout user');
+    res.cookie('sparktimetoken', '', {
+        httpOnly: true,
+        expires: new Date(0),
+    });
+
+    res.status(200).json({ message: 'Logged out' });
 });
 
 // @desc   Get user profile
