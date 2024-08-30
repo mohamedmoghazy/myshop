@@ -1,10 +1,9 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
-import jwt from 'jsonwebtoken';
 import generateToken from '../utils/generateToken.js';
 
 // @desc   Auth user & get token
-// @route  POST /api/users/login
+// @route  POST /api/users/auth
 // @access Public
 const login = asyncHandler(async (req, res) =>
 {
@@ -15,21 +14,17 @@ const login = asyncHandler(async (req, res) =>
     {
         generateToken(res, user._id);
 
-        res.status(200).json(
-            {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                isAdmin: user.isAdmin,
-            });
-    }
-    else
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+        });
+    } else
     {
         res.status(401);
         throw new Error('Invalid email or password');
     }
-
-    res.send('auth user');
 });
 
 // @desc   Register a new user
@@ -56,15 +51,13 @@ const registerUser = asyncHandler(async (req, res) =>
     {
         generateToken(res, user._id);
 
-        res.status(201).json(
-            {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                isAdmin: user.isAdmin,
-            });
-    }
-    else
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+        });
+    } else
     {
         res.status(400);
         throw new Error('Invalid user data');
@@ -93,13 +86,12 @@ const getUserProfile = asyncHandler(async (req, res) =>
 
     if (user)
     {
-        res.status(200).json(
-            {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                isAdmin: user.isAdmin,
-            });
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+        });
     } else
     {
         res.status(404);
@@ -126,13 +118,12 @@ const updateUserProfile = asyncHandler(async (req, res) =>
 
         const updatedUser = await user.save();
 
-        res.status(200).json(
-            {
-                _id: updatedUser._id,
-                name: updatedUser.name,
-                email: updatedUser.email,
-                isAdmin: updatedUser.isAdmin,
-            });
+        res.status(200).json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        });
     } else
     {
         res.status(404);
@@ -179,7 +170,17 @@ const getUserById = asyncHandler(async (req, res) =>
 // @access Private/Admin
 const deleteUser = asyncHandler(async (req, res) =>
 {
-    res.send('delete user');
+    const user = await User.findById(req.params.id);
+
+    if (user)
+    {
+        await user.remove();
+        res.status(200).json({ message: 'User removed' });
+    } else
+    {
+        res.status(404);
+        throw new Error('User not found');
+    }
 });
 
 // @desc   Update user
@@ -201,13 +202,12 @@ const updateUser = asyncHandler(async (req, res) =>
 
         const updatedUser = await user.save();
 
-        res.status(200).json(
-            {
-                _id: updatedUser._id,
-                name: updatedUser.name,
-                email: updatedUser.email,
-                isAdmin: updatedUser.isAdmin,
-            });
+        res.status(200).json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        });
     } else
     {
         res.status(404);

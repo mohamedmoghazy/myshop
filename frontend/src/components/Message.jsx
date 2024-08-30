@@ -1,24 +1,19 @@
 import React from 'react';
 import '../styles/Message.css';
 
-const Message = ({ type, text }) => {
-  return (
-    <div className={`message ${type}`}>
-      {text}
-    </div>
-  );
-};
-
-Message.defaultProps = {
-  type: 'info',
-  text: 'No message to display',
-};
-
 export const AlertTypes = {
   SUCCESS: 'success',
   ERROR: 'error',
   WARNING: 'warning',
   INFO: 'info'
+};
+
+const Message = ({ type = AlertTypes.INFO, text = 'No message to display' }) => {
+  return (
+    <div className={`message ${type}`}>
+      {text}
+    </div>
+  );
 };
 
 export default Message;
