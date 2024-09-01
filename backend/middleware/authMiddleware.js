@@ -1,29 +1,25 @@
-import JWT from 'jsonwebtoken';
-import AsyncHandler from './asyncHandler.js';
+import jwt from 'jsonwebtoken';
+import asyncHandler from './asyncHandler.js';
 import User from '../models/userModel.js';
 
-//protect routes
-const protect = AsyncHandler(async (req, res, next) =>
+// User must be authenticated
+const protect = asyncHandler(async (req, res, next) =>
 {
     let token;
 
-    // Read JWT from the coookie
-    token = req.cookies.sparktimetoken;
+    // Read JWT from the 'jwt' cookie
+    token = req.cookies.jwt;
 
-    // Make sure token exists
     if (token)
     {
         try
         {
-            // Verify token
-            const decoded = JWT.verify(token, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            // Find user by id
             req.user = await User.findById(decoded.userId).select('-password');
 
             next();
-        }
-        catch (error)
+        } catch (error)
         {
             console.error(error);
             res.status(401);
@@ -36,14 +32,13 @@ const protect = AsyncHandler(async (req, res, next) =>
     }
 });
 
-//Admin middleware
+// User must be an admin
 const admin = (req, res, next) =>
 {
     if (req.user && req.user.isAdmin)
     {
         next();
-    }
-    else
+    } else
     {
         res.status(401);
         throw new Error('Not authorized as an admin');
